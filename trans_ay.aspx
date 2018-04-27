@@ -33,7 +33,7 @@
                     ['txtCno', 'lblCno', 'acomp', 'noa,nick', 'txtCno,txtAcomp', 'acomp_b.aspx']
                     , ['txtStraddrno', 'lblStraddrno', 'addr', 'noa,addr', 'txtStraddrno,txtStraddr', 'addr_b.aspx']
                     , ['txtEndaddrno', 'lblEndaddrno_ay',  'addr', 'noa,addr', 'txtEndaddrno,txtEndaddr', 'addr_b.aspx']
-                    , ['txtAddrno3', 'lblAddrno3',  'addr', 'noa,addr', 'txtAddrno3,txtAdd3', 'addr_b.aspx']
+                    , ['txtAddno3', 'lblAddno3',  'addr', 'noa,addr', 'txtAddno3,txtAdd3', 'addr_b.aspx']
                     , ['txtCustno', 'lblCust', 'cust', 'noa,comp,nick', 'txtCustno,txtComp,txtNick', 'cust_b.aspx']
                     , ['txtCarno', 'lblCarno_ay', 'car2', 'a.noa,driverno,driver', 'txtCarno,txtDriverno,txtDriver', 'car2_b.aspx']
                     , ['txtDriverno', 'lblDriver_ay', 'driver', 'noa,namea', 'txtDriverno,txtDriver', 'driver_b.aspx']
@@ -375,7 +375,7 @@
 				<table class="tview" id="tview">
 					<tr>
 						<td align="center" style="width:20px; color:black;"><a id="vewChk"> </a></td>
-						<td align="center" style="width:100px; color:black;"><a id="vewNoa"> </a></td>
+						<td align="center" style="width:150px; color:black;"><a id="vewNoa"> </a></td>
 						<td align="center" style="width:130px; color:black;">客戶</td>
 						<td align="center" style="width:130px; color:black;"><a id="vewAcomp">貨運公司</a></td>
 					</tr>
@@ -441,8 +441,8 @@
                             <input id="txtStraddr" type="text" class="txt c1" style="width: 60%;"/></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblAddrno3" class="lbl btn" >中繼站</a></td>
-                        <td colspan="3"><input id="txtAddrno3" type="text" class="txt c1" style="width: 40%;"/>
+                        <td><span> </span><a id="lblAddno3" class="lbl btn" >中繼站</a></td>
+                        <td colspan="3"><input id="txtAddno3" type="text" class="txt c1" style="width: 40%;"/>
                             <input id="txtAdd3" type="text" class="txt c1" style="width: 60%;"/></td>
                     </tr>
                     <tr>

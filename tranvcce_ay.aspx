@@ -31,7 +31,7 @@
                 , ['txtEndaddrno', 'lblEndaddrno_ay',  'addr', 'noa,addr', 'txtEndaddrno,txtEndaddr', 'addr_b.aspx']
                 , ['txtCustno', 'lblCust', 'cust', 'noa,comp,nick', 'txtCustno,txtComp,txtNick', 'cust_b.aspx']
                 , ['txtCarno', 'lblCarno_ay', 'car2', 'a.noa,driverno,driver', 'txtCarno,txtLng,txtLat', 'car2_b.aspx']
-                , ['txtLng', 'lblDriver_ay', 'driver', 'noa,namea', 'txtLng,txtLat', 'driver_b.aspx']);
+                , ['txtEndlng', 'lblLng',  'addr', 'noa,addr', 'txtEndlng,txtEndlat', 'addr_b.aspx']);
 
             $(document).ready(function() {
                 bbmKey = ['noa'];
@@ -65,7 +65,6 @@
                     var t_where = "(Cno='"+t_cno+"' or len('"+t_cno+"')=0) and (Custno='"+t_custno+"' or len('"+t_custno+"')=0) and (dldate='"+t_po+"' or len('"+t_po+"')=0) and noa in (select noa from view_tranorde a where isnull(enda,0)='1' and not exists(select noa from view_tranvcce where ordeno=a.noa and chk1='1'))";
                     q_box("tranordeay_b.aspx?" + r_userno + ";" + r_name + ";" + q_time + ";" + t_where, 'tranordeay', "100%", "100%", "");
                 });
-
             }
 
             function q_boxClose(s2) {
@@ -87,13 +86,15 @@
                                     $('#txtAddr').val(b_ret[0].addr);
                                     $('#txtEndaddrno').val(b_ret[0].cbno);
                                     $('#txtEndaddr').val(b_ret[0].caddr);
-                                    $('#txtTranno').val(b_ret[0].option01);
+                                    $('#txtTimea').val(b_ret[0].option01);
                                     $('#txtUnit').val(b_ret[0].option02);
                                     $('#txtCarno2').val(b_ret[0].ctweight2);
                                     $('#txtMemo').val(b_ret[0].memo);
                                     $('#txtImg').val(b_ret[0].memo2);
                                     $('#txtVolume').val(b_ret[0].price);
                              }
+                        var t_where = "where=^^ noa in(select MAX(noa) from view_tranvcce where noa like '"+ $('#txtOrdeno').val() +"%')^^";
+                        q_gt('tranvcce', t_where, 0, 0, 0, "tranvcce",r_accy);
                         break;
                 case q_name + '_s':
                     q_boxClose2(s2);
@@ -104,10 +105,23 @@
 
             function q_gtPost(t_name) {
                 switch (t_name) {
-                case q_name:
-                    if (q_cur == 4)
-                        q_Seek_gtPost();
-                    break;
+                    case "tranvcce":
+                        var as = _q_appendData("tranvcce", "", true);
+                        if (as.length > 0){
+                            if(as[0].noa.indexOf("-")>=0){
+                                var noa = as[0].noa.substr(as[0].noa.indexOf("-")+1,as[0].noa.length - as[0].noa.indexOf("-"));
+                                $('#txtNoa').val($('#txtOrdeno').val() + '-' + right('1'+(parseInt(noa)+1).toString(),3));
+                            }else{
+                                $('#txtNoa').val($('#txtOrdeno').val()+'-1');
+                            }
+                        }else{
+                            $('#txtNoa').val($('#txtOrdeno').val());
+                        }
+                        break;
+                    case q_name:
+                        if (q_cur == 4)
+                            q_Seek_gtPost();
+                        break;
                 }
             }
 
@@ -125,10 +139,16 @@
                 }
                 var t_noa = trim($('#txtNoa').val());
                 var t_date = trim($('#txtDatea').val());
-                if (t_noa.length == 0 || t_noa == "AUTO")
+                
+                var t_noa = $.trim($('#txtNoa').val());
+                var t_accy = $.trim(r_accy);
+                var t_name = $.trim(r_name);
+                q_func('qtxt.query.trans_ay', 'trans.txt,trans_ay,'+ encodeURI(t_accy) + ';'+ encodeURI(t_noa) + ';'+ encodeURI(t_name));
+                    
+                /*if (t_noa.length == 0 || t_noa == "AUTO")
                     q_gtnoa(q_name, replaceAll(q_getPara('sys.key_tranvcce') + (t_date.length == 0 ? q_date() : t_date), '/', ''));
-                else
-                    wrServer(t_noa);
+                else*/
+                wrServer(t_noa);
             }
 
             function _btnSeek() {
@@ -163,6 +183,11 @@
             function q_stPost() {
                 if (!(q_cur == 1 || q_cur == 2))
                     return false;
+                    
+                var t_noa = $.trim($('#txtNoa').val());
+                var t_accy = $.trim(r_accy);
+                var t_name = $.trim(r_name);
+                q_func('qtxt.query.trans_ay', 'trans.txt,trans_ay,'+ encodeURI(t_accy) + ';'+ encodeURI(t_noa) + ';'+ encodeURI(t_name));
             }
 
             function refresh(recno) {
@@ -349,8 +374,8 @@
 					<tr>
 						<td align="center" style="width:5%"><a id="vewChk"> </a></td>
 						<td align="center" style="display:none;"><a> </a></td>
-						<td align="center" style="width:20%"><a>單據</a></td>
-						<td align="center" style="width:30%"><a>客戶</a></td>
+						<td align="center" style="width:35%"><a>單據</a></td>
+						<td align="center" style="width:35%"><a>客戶</a></td>
 						<td align="center" style="width:30%"><a>地區</a></td>
 					</tr>
 					<tr>
