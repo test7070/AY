@@ -25,7 +25,7 @@
 			brwKey = 'noa';
 			q_desc = 1;
             //q_xchg = 1;
-            brwCount2 = 17;
+            brwCount2 = 18;
 
 			//['txtCarno', 'lblCarno', 'car2', 'a.noa,driverno,driver', 'txtCarno,txtDriverno,txtDriver', 'car2_b.aspx']
             //不能彈出瀏覽視窗
@@ -33,9 +33,10 @@
                     ['txtCno', 'lblCno', 'acomp', 'noa,nick', 'txtCno,txtAcomp', 'acomp_b.aspx']
                     , ['txtStraddrno', 'lblStraddrno', 'addr', 'noa,addr', 'txtStraddrno,txtStraddr', 'addr_b.aspx']
                     , ['txtEndaddrno', 'lblEndaddrno_ay',  'addr', 'noa,addr', 'txtEndaddrno,txtEndaddr', 'addr_b.aspx']
+                    , ['txtAddrno3', 'lblAddrno3',  'addr', 'noa,addr', 'txtAddrno3,txtAdd3', 'addr_b.aspx']
                     , ['txtCustno', 'lblCust', 'cust', 'noa,comp,nick', 'txtCustno,txtComp,txtNick', 'cust_b.aspx']
                     , ['txtCarno', 'lblCarno_ay', 'car2', 'a.noa,driverno,driver', 'txtCarno,txtDriverno,txtDriver', 'car2_b.aspx']
-                    , ['txtBoat', 'lblBoat_ay', 'car2', 'a.noa,driverno,driver', 'txtBoat,txtBoatname,txtShip', 'car2_b.aspx']
+                    , ['txtDriverno', 'lblDriver_ay', 'driver', 'noa,namea', 'txtDriverno,txtDriver', 'driver_b.aspx']
 			);
             	
 			$(document).ready(function() {
@@ -61,18 +62,13 @@
 				$('#btnOk').val($('#btnOk').val() + "(F9)");
 				q_mask(bbmMask);
                 q_cmbParse("cmbCaseend",',北部,中部,南部,回頭車');
-				/*$('#txtTrandate').change(function(e){
-					getDriverprice();
-					getPrice();
-				});*/
-				
-				$('#lblOrdeno_ay').click(function(e){
+				/*$('#lblOrdeno_ay').click(function(e){
                     t_custno=$('#txtCustno').val();
                     t_cno=$('#txtCno').val();
                     t_po=$('#cmbCaseend').val();
-                    var t_where = "(Cno='"+t_cno+"' or len('"+t_cno+"')=0) and (Custno='"+t_custno+"' or len('"+t_custno+"')=0) and (no2='"+t_po+"' or len('"+t_po+"')=0) and noa in (select noa from view_tranvcce a where isnull(chk1,0)='1' and not exists(select noa from view_trans where ordeno=a.noa))";
+                    var t_where = "(Cno='"+t_cno+"' or len('"+t_cno+"')=0) and (Custno='"+t_custno+"' or len('"+t_custno+"')=0) and (no2='"+t_po+"' or len('"+t_po+"')=0) and noa in (select noa from view_tranvcce a where isnull(chk1,0)='1' and not exists(select noa from view_trans where ordeno=a.noa and chk1='1'))";
                     q_box("tranvcceay_b.aspx?" + r_userno + ";" + r_name + ";" + q_time + ";" + t_where, 'tranvcceay', "100%", "100%", "");
-                });
+                });*/
 				
 			}
 
@@ -83,7 +79,7 @@
 			function q_boxClose(s2) {
 				var ret;
 				switch (b_pop) {
-				    case 'tranvcceay':
+				    /*case 'tranvcceay':
                             if (q_cur > 0 && q_cur < 4) {
                                 b_ret = getb_ret();
                                 if (!b_ret || b_ret.length == 0)
@@ -107,9 +103,10 @@
                                     $('#txtEndaddr').val(b_ret[0].endaddr);
                                     $('#txtUnit').val(b_ret[0].tranno);
                                     $('#txtAtel').val(b_ret[0].unit);
-                                    $('#txtAaddr').val(b_ret[0].carno2);                                 
+                                    $('#txtAaddr').val(b_ret[0].carno2);
+                                    $('#txtSo').val(b_ret[0].ordeno);                                 
                              }
-                        break;
+                        break;*/
 					case q_name + '_s':
 						q_boxClose2(s2);
 						break;
@@ -427,25 +424,26 @@
                     <tr>
                         <td><span> </span><a id="lblCaseend_ay" class="lbl" >地區</a></td>
                         <td><select id="cmbCaseend" class="txt c1"> </select></td>
-                        <td><span> </span><a id="lblOrdeno_ay" class="lbl btn" >派車單號</a></td>
+                        <td><span> </span><a id="lblOrdeno_ay" class="lbl" >派車單號</a></td>
                         <td><input id="txtOrdeno" type="text" class="txt c1" /></td>
+                        <td  style="display: none"><input id="txtSo" type="text" class="txt c1"/></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblCarno_ay" class="lbl btn" >收件司機</a></td>
-                        <td colspan="2"><input id="txtCarno" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtDriverno" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtDriver" type="text" class="txt c1" style="width: 30%;"/></td>
-                    </tr>
-                    <tr>
-                        <td><span> </span><a id="lblBoat_ay" class="lbl btn" >送件司機</a></td>
-                        <td colspan="2"><input id="txtBoat" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtBoatname" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtShip" type="text" class="txt c1" style="width: 30%;"/></td>
+                        <td><span> </span><a id="lblCarno_ay" class="lbl btn" >司機</a></td>
+                        <td><input id="txtCarno" type="text" class="txt c1"/>
+                        <td><span> </span><a id="lblDriver_ay" class="lbl btn" >司機</a></td>
+                        <td><input id="txtDriverno" type="text" class="txt c1" style="width: 50%;"/>
+                            <input id="txtDriver" type="text" class="txt c1" style="width: 50%;"/></td>
                     </tr>
                     <tr>
                         <td><span> </span><a id="lblStraddrno" class="lbl btn" >起運點</a></td>
                         <td colspan="3"><input id="txtStraddrno" type="text" class="txt c1" style="width: 40%;"/>
                             <input id="txtStraddr" type="text" class="txt c1" style="width: 60%;"/></td>
+                    </tr>
+                    <tr>
+                        <td><span> </span><a id="lblAddrno3" class="lbl btn" >中繼站</a></td>
+                        <td colspan="3"><input id="txtAddrno3" type="text" class="txt c1" style="width: 40%;"/>
+                            <input id="txtAdd3" type="text" class="txt c1" style="width: 60%;"/></td>
                     </tr>
                     <tr>
                         <td><span> </span><a id="lblEndaddrno_ay" class="lbl btn" >卸貨點</a></td>

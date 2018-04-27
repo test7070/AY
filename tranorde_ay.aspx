@@ -16,7 +16,7 @@
 		<script type="text/javascript">
             var q_name = "tranorde";
             var q_readonly = ['txtNoa', 'txtWeight','txtTotal', 'txtWorker', 'txtWorker2'];
-            var bbmNum = [];
+            var bbmNum = [['txtPrice',10,0,1]];
             var bbmMask = [];
             q_sqlCount = 6;
             brwCount = 6;
@@ -371,6 +371,8 @@
                     <tr>
                         <td><span> </span><a id="lblOption01_ay" class="lbl" >數量</a></td>
                         <td><input id="txtOption01" type="text" class="txt c1 num"/></td>
+                        <td><span> </span><a id="lblPrice_ay" class="lbl" >金額</a></td>
+                        <td><input id="txtPrice" type="text" class="txt c1 num"/></td>
                     </tr>
                     <tr>
                         <td><span> </span><a id="lblOption02_ay" class="lbl" >材積</a></td>

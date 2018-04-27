@@ -16,7 +16,7 @@
 		<script type="text/javascript">
             var q_name = "tranvcce";
             var q_readonly = ['txtNoa', 'txtOrdeno', 'txtWorker', 'txtWorker2'];
-            var bbmNum = [];
+            var bbmNum = [['txtVolume',10,0,1]];
             var bbmMask = [];
             q_sqlCount = 6;
             brwCount = 6;
@@ -31,7 +31,7 @@
                 , ['txtEndaddrno', 'lblEndaddrno_ay',  'addr', 'noa,addr', 'txtEndaddrno,txtEndaddr', 'addr_b.aspx']
                 , ['txtCustno', 'lblCust', 'cust', 'noa,comp,nick', 'txtCustno,txtComp,txtNick', 'cust_b.aspx']
                 , ['txtCarno', 'lblCarno_ay', 'car2', 'a.noa,driverno,driver', 'txtCarno,txtLng,txtLat', 'car2_b.aspx']
-                , ['txtTimea', 'lblCarno2_ay', 'car2', 'a.noa,driverno,driver', 'txtTimea,txtEndlng,txtEndlat', 'car2_b.aspx']);
+                , ['txtLng', 'lblDriver_ay', 'driver', 'noa,namea', 'txtLng,txtLat', 'driver_b.aspx']);
 
             $(document).ready(function() {
                 bbmKey = ['noa'];
@@ -62,7 +62,7 @@
                     t_custno=$('#txtCustno').val();
                     t_cno=$('#txtCno').val();
                     t_po=$('#cmbNo2').val();
-                    var t_where = "(Cno='"+t_cno+"' or len('"+t_cno+"')=0) and (Custno='"+t_custno+"' or len('"+t_custno+"')=0) and (dldate='"+t_po+"' or len('"+t_po+"')=0) and noa in (select noa from view_tranorde a where isnull(enda,0)='1' and not exists(select noa from view_tranvcce where ordeno=a.noa))";
+                    var t_where = "(Cno='"+t_cno+"' or len('"+t_cno+"')=0) and (Custno='"+t_custno+"' or len('"+t_custno+"')=0) and (dldate='"+t_po+"' or len('"+t_po+"')=0) and noa in (select noa from view_tranorde a where isnull(enda,0)='1' and not exists(select noa from view_tranvcce where ordeno=a.noa and chk1='1'))";
                     q_box("tranordeay_b.aspx?" + r_userno + ";" + r_name + ";" + q_time + ";" + t_where, 'tranordeay', "100%", "100%", "");
                 });
 
@@ -92,6 +92,7 @@
                                     $('#txtCarno2').val(b_ret[0].ctweight2);
                                     $('#txtMemo').val(b_ret[0].memo);
                                     $('#txtImg').val(b_ret[0].memo2);
+                                    $('#txtVolume').val(b_ret[0].price);
                              }
                         break;
                 case q_name + '_s':
@@ -150,7 +151,7 @@
             }
 
             function btnPrint() {
-            	q_box('z_tran_sh.aspx' + "?;;;noa=" + trim($('#txtNoa').val()) + ";" + r_accy, '', "95%", "95%", q_getMsg("popPrint"));
+            	//q_box('z_tran_sh.aspx' + "?;;;noa=" + trim($('#txtNoa').val()) + ";" + r_accy, '', "95%", "95%", q_getMsg("popPrint"));
             }
 
             function wrServer(key_value) {
@@ -395,16 +396,11 @@
                         <td><input id="txtOrdeno" type="text" class="txt c1" /></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblCarno_ay" class="lbl btn" >收件司機</a></td>
-                        <td colspan="2"><input id="txtCarno" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtLng" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtLat" type="text" class="txt c1" style="width: 30%;"/></td>
-                    </tr>
-                    <tr>
-                        <td><span> </span><a id="lblCarno2_ay" class="lbl btn" >送件司機</a></td>
-                        <td colspan="2"><input id="txtTimea" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtEndlng" type="text" class="txt c1" style="width: 30%;"/>
-                            <input id="txtEndlat" type="text" class="txt c1" style="width: 30%;"/></td>
+                        <td><span> </span><a id="lblCarno_ay" class="lbl btn" >車牌</a></td>
+                        <td><input id="txtCarno" type="text" class="txt c1"/></td>
+                        <td><span> </span><a id="lblDriver_ay" class="lbl btn" >司機</a></td>
+                        <td><input id="txtLng" type="text" class="txt c1" style="width:50%;"/>
+                            <input id="txtLat" type="text" class="txt c1" style="width:50%;"/></td>
                     </tr>
                     <tr>
                         <td><span> </span><a id="lblAddrno_ay" class="lbl btn" >起運點</a></td>
@@ -412,13 +408,20 @@
                             <input id="txtAddr" type="text" class="txt c1" style="width: 60%;"/></td>
                     </tr>
                     <tr>
+                        <td><span> </span><a id="lblLng" class="lbl btn" >中繼站</a></td>
+                        <td colspan="3"><input id="txtEndlng" type="text" class="txt c1" style="width: 40%;"/>
+                            <input id="txtEndlat" type="text" class="txt c1" style="width: 60%;"/></td>
+                    </tr>
+                    <tr>
                         <td><span> </span><a id="lblEndaddrno_ay" class="lbl btn" >卸貨點</a></td>
                         <td colspan="3"><input id="txtEndaddrno" type="text" class="txt c1" style="width: 40%;"/>
                             <input id="txtEndaddr" type="text" class="txt c1" style="width: 60%;"/></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblTranno_ay" class="lbl" >數量</a></td>
-                        <td><input id="txtTranno" type="text" class="txt c1 num"/></td>
+                        <td><span> </span><a id="lblTimea_ay" class="lbl" >數量</a></td>
+                        <td><input id="txtTimea" type="text" class="txt c1 num"/></td>
+                        <td><span> </span><a id="lblVolume_ay" class="lbl" >金額</a></td>
+                        <td><input id="txtVolume" type="text" class="txt c1 num" /></td>
                     </tr>
                     <tr>
                         <td><span> </span><a id="lblUnit" class="lbl" >材積</a></td>
