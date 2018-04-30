@@ -41,7 +41,13 @@
 						dbf : 'cust',
 						index : 'noa,comp',
 						src : 'cust_b.aspx'
-					}]
+					},{
+                        type : '2',//[8][9]
+                        name : 'xdriver',
+                        dbf : 'driver',
+                        index : 'noa,namea',
+                        src : 'driver_b.aspx'
+                    }]
                     });
                 q_popAssign();
                  $('#txtXdate1').mask('999/99/99');
