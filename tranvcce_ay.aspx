@@ -57,7 +57,7 @@
                 q_mask(bbmMask);
                 $('#txtDatea').datepicker();
                 q_cmbParse("cmbNo2",',北部,中部,南部,回頭車');
-                q_cmbParse("cmblng",',收,送');
+                q_cmbParse("cmbTranno",',收,送');
                 
                 $('#lblOrdeno').click(function(e){
                     t_custno=$('#txtCustno').val();
@@ -400,9 +400,9 @@
 					</tr>
 					<tr>
                         <td><span> </span><a class="lbl" >單據類別</a></td>
-                        <td><select id="cmblng"> </select></td>
+                        <td><select id="cmbTranno"> </select></td>
 						<td><span> </span><a class="lbl" >合約號碼</a></td>
-                        <td><input id="txtTranno" type="text" class="txt c1"/></td>
+                        <td><input id="txtAddress" type="text" class="txt c1"/></td>
                     </tr>
 					<tr>
                         <td><span> </span><a id="lblNoa_ay" class="lbl" >單據</a></td>
