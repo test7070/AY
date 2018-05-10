@@ -345,14 +345,18 @@
 					</tr>
 					<tr>
                         <td><span> </span><a id="lblCno" class="lbl btn" >貨運公司</a></td>
-                        <td colspan="3"><input id="txtCno" type="text" class="txt c1" style="width: 40%;"/>
-                            <input id="txtAcomp" type="text" class="txt c1" style="width: 60%;"/></td>
+                        <td colspan="3">
+							<input id="txtCno" type="text" class="txt c1" style="width: 40%;"/>
+                            <input id="txtAcomp" type="text" class="txt c1" style="width: 60%;"/>
+						</td>
                     </tr>
 					<tr>
                         <td><span> </span><a id="lblCust" class="lbl btn" > </a></td>
-                        <td colspan="3"><input id="txtCustno" type="text" class="txt c1" style="width: 40%;"/>
+                        <td colspan="3">
+							<input id="txtCustno" type="text" class="txt c1" style="width: 40%;"/>
                             <input id="txtComp" type="text" class="txt c1" style="width: 60%;"/>
-                            <input id="txtNick" type="text" class="txt c1" style="display: none;"/></td>
+                            <input id="txtNick" type="text" class="txt c1" style="display: none;"/>
+						</td>
                     </tr>
                     <tr>
                         <td><span> </span><a id="lblStype_ay" class="lbl" >地區</a></td>
