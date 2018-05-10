@@ -96,3 +96,34 @@ dbo.getComma(total2,0) total2,
 from @tmp
 order by dno,driver,gno,datea
 ;
+-------------------------------------------------------------------------------------------------------
+z_tran_ay03:--z_tran_ay03
+SET QUOTED_IDENTIFIER OFF
+declare @t_bdate nvarchar(20) = case when '#non'=[2] then '' else [2] end 
+declare @t_edate nvarchar(20) = case when '#non'=[3] then char(255) else [3] end 
+
+declare @tmp1 table(
+	gno nvarchar(1),
+	bdatea nvarchar(9),
+	edatea nvarchar(9),
+	datea nvarchar(9),
+	cust nvarchar(max),
+	driver nvarchar(10), ---收件司機 抓派車單司機
+	caseend nvarchar(20),
+	straddr  nvarchar(max),
+	str1  nvarchar(2),
+	endaddr nvarchar(max),
+	mount nvarchar(90),
+	atel nvarchar(20),
+	aaddr nvarchar(20),
+	memo nvarchar(max),
+	memo2 nvarchar(max),
+	driver2 nvarchar(10), ---送件司機
+	worker nvarchar(10)
+)
+insert into @tmp1
+select '0',@t_bdate,@t_edate,datea,comp,lat,no2,addr,'=>',endaddr,timea,unit,carno2,memo,img,'',worker
+from view_tranvcce where (datea between @t_bdate and @t_edate)
+
+select * from @tmp1
+;
