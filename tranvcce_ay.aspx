@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 	<head>
-		<title></title>
+		<title> </title>
 		<script src="../script/jquery.min.js" type="text/javascript"></script>
 		<script src='../script/qj2.js' type="text/javascript"></script>
 		<script src='qset.js' type="text/javascript"></script>
@@ -392,11 +392,7 @@
 			<div class='dbbm'>
 				<table class="tbbm"  id="tbbm">
 					<tr class="tr0" style="height:1px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td class="tdZ"></td>
+						<td> </td><td> </td><td> </td><td> </td><td class="tdZ"> </td>
 					</tr>
 					<tr>
                         <td><span> </span><a class="lbl" >單據類別</a></td>
@@ -472,7 +468,7 @@
                     <tr>
                         <td><span> </span><a id="lblWorker_ay" class="lbl" >經手人</a></td>
                         <td><input id="txtWorker" type="text" class="txt c1"/></td>
-                        <td></td>
+                        <td> </td>
                         <td><input id="chkChk1" type="checkbox"/>
                             <span> </span><a id='lblEnda_wj'>結案</a>
                         </td>
