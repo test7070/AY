@@ -191,6 +191,7 @@ declare @tmp table(
 	weight nvarchar(100),
 	total float
 )
+--107/05/15 羅小姐 不用計算總數量、總材積與總重量
 insert @tmp
 select '0','',a.custno,a.comp,'','','',sum(total)
 from view_trans a
