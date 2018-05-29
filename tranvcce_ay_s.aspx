@@ -40,7 +40,7 @@
 				$('#txtBtrandate').datepicker();
 				$('#txtEtrandate').datepicker(); 
 				$('#txtNoa').focus();
-				q_cmbParse("cmbDldate",',北部,中部,南部,回頭車');
+				q_cmbParse("cmbNo2",',北部,中部,南部,回頭車');
 			}
 
 			function q_seekStr() {
@@ -51,7 +51,7 @@
 				t_acomp = $.trim($('#txtAcomp').val());
 				t_custno = $.trim($('#txtCustno').val());
 				t_comp = $.trim($('#txtComp').val());
-				t_dldate = $('#cmbDldate').val();
+				t_No2 = $('#cmbNo2').val();
 				
 				
 				var t_where = " 1=1 "
@@ -59,7 +59,7 @@
 					+q_sqlPara2("noa", t_noa)
 					+q_sqlPara2("custno", t_custno)
 					+q_sqlPara2("cno",t_cno)
-					+q_sqlPara2("No2",t_dldate);
+					+q_sqlPara2("no2",t_No2);
 					
 				if(t_comp.length>0)	
 					t_where += " and charindex('"+t_comp+"',comp)>0";
@@ -112,7 +112,7 @@
                 </tr>
                 <tr class='seek_tr'>
                     <td class='seek'  style="width:20%;"><a id='lblTypea'>地區</a></td>
-                    <td><select id="cmbDldate" class="txt c1" style="font-size:medium;"> </select></td>
+                    <td><select id="cmbNo2" class="txt c1" style="font-size:medium;"> </select></td>
                 </tr>
 			</table>
 			<!--#include file="../inc/seek_ctrl.inc"-->

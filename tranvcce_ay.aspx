@@ -17,14 +17,13 @@
             var q_name = "tranvcce";
             var q_readonly = ['txtNoa', 'txtOrdeno', 'txtWorker', 'txtWorker2'];
             var bbmNum = [['txtVolume',10,0,1]];
-            var bbmMask = [];
+              var bbmMask = [];
             q_sqlCount = 6;
             brwCount = 6;
+            q_desc = 1;
             brwList = [];
             brwNowPage = 0;
             brwKey = 'noa';
-            q_alias = '';
-            q_desc = 1;
             brwCount2 = 15;
             aPop = new Array(['txtCno', 'lblCno', 'acomp', 'noa,acomp', 'txtCno,txtAcomp', 'acomp_b.aspx']
                 , ['txtAddrno', 'lblAddrno_ay', 'addr', 'noa,addr', 'txtAddrno,txtAddr', 'addr_b.aspx']
@@ -33,19 +32,20 @@
                 , ['txtCarno', 'lblCarno_ay', 'car2', 'a.noa,driverno,driver', 'txtCarno,txtLng,txtLat', 'car2_b.aspx']
                 , ['txtEndlng', 'lblLng',  'addr', 'noa,addr', 'txtEndlng,txtEndlat', 'addr_b.aspx']);
 
-            $(document).ready(function() {
+           $(document).ready(function() {
+                var t_where = '';
                 bbmKey = ['noa'];
                 bbsKey = ['noa', 'noq'];
                 q_brwCount();
                 q_gt(q_name, q_content, q_sqlCount, 1, 0, '', r_accy);
             });
-
+            
             function main() {
                 if (dataErr) {
                     dataErr = false;
                     return;
                 }
-                mainForm(0);
+                mainForm(1);
             }
 
             function sum() {
@@ -95,7 +95,7 @@
                                     $('#txtVolume').val(b_ret[0].price);
                              }
                         var t_where = "where=^^ noa in(select MAX(noa) from view_tranvcce where noa like '"+ $('#txtOrdeno').val() +"%')^^";
-                        q_gt('tranvcce', t_where, 0, 0, 0, "tranvcce",r_accy);
+                        q_gt('tranvcce', t_where, 0, 0, 0, "tranvcce2trd",r_accy);
                         break;
                 case q_name + '_s':
                     q_boxClose2(s2);
@@ -106,7 +106,7 @@
 
             function q_gtPost(t_name) {
                 switch (t_name) {
-                    case "tranvcce":
+                    case "tranvcce2trd":
                         var as = _q_appendData("tranvcce", "", true);
                         if (as.length > 0){
                             if(as[0].noa.indexOf("-")>=0){
@@ -123,11 +123,11 @@
                         if (q_cur == 4)
                             q_Seek_gtPost();
                         break;
+                    default:
+                        break;
                 }
             }
 
-            function q_popPost(s1) {
-            }
 
             function btnOk() {
             	sum();
@@ -140,16 +140,22 @@
                 }
                 var t_noa = trim($('#txtNoa').val());
                 var t_date = trim($('#txtDatea').val());
+                var t_ordenoa = trim($('#txtOrdeno').val());
                 
                 var t_noa = $.trim($('#txtNoa').val());
                 var t_accy = $.trim(r_accy);
                 var t_name = $.trim(r_name);
                 q_func('qtxt.query.trans_ay', 'trans.txt,trans_ay,'+ encodeURI(t_accy) + ';'+ encodeURI(t_noa) + ';'+ encodeURI(t_name));
                     
-                /*if (t_noa.length == 0 || t_noa == "AUTO")
+                if (t_noa.length == 0 || t_noa == "AUTO")
                     q_gtnoa(q_name, replaceAll(q_getPara('sys.key_tranvcce') + (t_date.length == 0 ? q_date() : t_date), '/', ''));
-                else*/
-                wrServer(t_noa);
+                else
+                    wrServer(t_noa);
+            }
+            
+            function q_popPost(id) {
+                switch(id) {
+                }
             }
 
             function _btnSeek() {
@@ -214,9 +220,8 @@
 
             function btnSeek() {
                 _btnSeek();
-                q_box('tranvcce_s.aspx', q_name + '_s', "500px", "600px", q_getMsg("popSeek"));
             }
-
+            
             function btnTop() {
                 _btnTop();
             }
@@ -260,7 +265,7 @@
             }
             .dview {
                 float: left;
-                width: 400px;
+                width: 500px;
                 border-width: 0px;
             }
             .tview {
@@ -376,9 +381,11 @@
 					<tr>
 						<td align="center" style="width:5%"><a id="vewChk"> </a></td>
 						<td align="center" style="display:none;"><a> </a></td>
-						<td align="center" style="width:35%"><a>單據</a></td>
-						<td align="center" style="width:35%"><a>客戶</a></td>
-						<td align="center" style="width:30%"><a>地區</a></td>
+						<td align="center" style="width:30%"><a>單據</a></td>
+						<td align="center" style="width:30%"><a>客戶</a></td>
+						<td align="center" style="width:10%"><a>地區</a></td>
+						<td align="center" style="width:10%"><a>類別</a></td>
+						<td align="center" style="width:15%"><a>司機</a></td>
 					</tr>
 					<tr>
 						<td>
@@ -387,6 +394,8 @@
 						<td align="center" id='noa'>~noa</td>
 						<td align="center" id='comp'>~comp</td>
 						<td align="center" id='no2'>~no2</td>
+						<td align="center" id='tranno'>~tranno</td>
+						<td align="center" id='lat'>~lat</td>
 					</tr>
 				</table>
 			</div>
@@ -459,11 +468,11 @@
                         <td><input id="txtCarno2" type="text" class="txt c1 num"/></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblMemo" class="lbl" > </a></td>
+                        <td><span> </span><a id="lblMemo_ay" class="lbl" >收送件注意事項</a></td>
                         <td colspan="3"><textarea id="txtMemo" style="height:60px;" class="txt c1"> </textarea></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblImg" class="lbl" >備註二</a></td>
+                        <td><span> </span><a id="lblImg" class="lbl" >應收帳注意事項</a></td>
                         <td colspan="3"><textarea id="txtImg" style="height:60px;" class="txt c1"> </textarea></td>
                     </tr>
                     <tr>

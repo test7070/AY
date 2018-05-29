@@ -385,11 +385,11 @@
                         <td><input id="txtCtweight2" type="text" class="txt c1 num"/></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblMemo" class="lbl" > </a></td>
+                        <td><span> </span><a id="lblMemo_ay" class="lbl" >收送件注意事項</a></td>
                         <td colspan="3"><textarea id="txtMemo" style="height:60px;" class="txt c1"> </textarea></td>
                     </tr>
                     <tr>
-                        <td><span> </span><a id="lblMemo2_ay" class="lbl" >備註二</a></td>
+                        <td><span> </span><a id="lblMemo2_ay" class="lbl" >應收帳注意事項</a></td>
                         <td colspan="3"><textarea id="txtMemo2" style="height:60px;" class="txt c1"> </textarea></td>
                     </tr>
                     <tr>

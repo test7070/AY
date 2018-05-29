@@ -94,7 +94,6 @@
 					<th align="center"><a id=''>客戶</a></th>
 					<th align="center"><a id=''>地區</a></th>
 					<th align="center"><a id=''>起運點</a></th>
-					<th align="center"><a id=''>中繼站</a></th>
 					<th align="center"><a id=''>卸貨點</a></th>
 					<th align="center"><a id=''>數量</a></th>
 					<th align="center"><a id=''>材積</a></th>

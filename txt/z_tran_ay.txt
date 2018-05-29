@@ -133,9 +133,12 @@ z_tran_ay04:--z_tran_ay04
 SET QUOTED_IDENTIFIER OFF
 declare @t_bdate nvarchar(20) = case when '#non'=[2] then '' else [2] end 
 declare @t_edate nvarchar(20) = case when '#non'=[3] then char(255) else [3] end 
+declare @t_bdriverno nvarchar(20) = case when '#non'=[8] then '' else [8] end 
+declare @t_edriverno nvarchar(20) = case when '#non'=[9] then char(255) else [9] end 
 
 declare @tmp table(
 	gno nvarchar(1),
+	rr int,
 	datea nvarchar(10),
 	custno nvarchar(50),
 	comp nvarchar(max),
@@ -151,32 +154,34 @@ declare @tmp table(
 	memo nvarchar(max)
 )
 insert @tmp
-select '0',datea,custno,comp,tranno,address,carno,lng,lat,endaddr,timea,unit,carno2,memo
+select '0','0',datea,custno,comp,tranno,address,carno,lng,lat,endaddr,timea,unit,carno2,memo
 from view_tranvcce
 where isnull(tranno,'')!='送'
 and (datea between @t_bdate and @t_edate)
 
-insert @tmp(gno,datea,custno,comp,typea,address)
-select '1',datea,custno,comp,tranno,address
-from view_tranvcce
-where isnull(tranno,'')='送'
-and (datea between @t_bdate and @t_edate)
-
 insert @tmp
-select '2',datea,custno,comp,tranno,address,carno,lng,lat,endaddr,timea,unit,carno2,memo
+select '2','1',datea,custno,comp,tranno,address,carno,lng,lat,endaddr,timea,unit,carno2,memo
 from view_tranvcce
 where isnull(tranno,'')='送'
 and (datea between @t_bdate and @t_edate)
+and (isnull(lng,'') between @t_bdriverno and @t_edriverno)
 
-insert @tmp(gno,address)
-select '3',address
+insert @tmp(gno,rr,datea,custno,comp,typea,address,carno,driverno,driver)
+select '1','1',datea,custno,comp,typea,address,carno,driverno,driver
+from @tmp
+where gno='2'
+group by datea,custno,comp,typea,address,carno,driverno,driver
+
+delete @tmp where address not in (select address from @tmp where gno='2') and gno='0'
+
+insert @tmp(gno,rr,address)
+select '3','2',address
 from @tmp
 group by address
 
 select * from @tmp
-order by address,gno
+order by address,rr,carno,gno
 ;
-
 ----------------------------------------------------------------------------------------------
 z_tran_ay05:--z_tran_ay05
 declare @t_bdate nvarchar(20) = case when '#non'=[2] then '' else [2] end 
