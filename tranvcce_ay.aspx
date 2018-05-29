@@ -161,8 +161,9 @@
             function btnIns() {
                 _btnIns();
                 $('#txtNoa').val('AUTO');
-                $('#txttrandate').val(q_date());
+                $('#txtTrandate').val(q_date());
                 $('#txtDatea').val(q_date()).focus();
+                $('#txtAddress').val(replaceAll(q_date(), '/', ''));
             }
 
             function btnModi() {
@@ -397,7 +398,7 @@
 					<tr>
                         <td><span> </span><a class="lbl" >單據類別</a></td>
                         <td><select id="cmbTranno"> </select></td>
-						<td><span> </span><a class="lbl" >合約號碼</a></td>
+						<td><span> </span><a class="lbl" >切結書號碼</a></td>
                         <td><input id="txtAddress" type="text" class="txt c1"/></td>
                     </tr>
 					<tr>

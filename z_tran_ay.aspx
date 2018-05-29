@@ -47,6 +47,10 @@
                         dbf : 'driver',
                         index : 'noa,namea',
                         src : 'driver_b.aspx'
+                    },{
+                        type : '5',
+                        name : 'xstype', //[10]
+                        value :(' ,北部,中部,南部,回頭車').split(',')
                     }]
                     });
                 q_popAssign();
