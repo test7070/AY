@@ -17,6 +17,7 @@
 			
 			aPop = new Array(
 				['txtCno', 'lblCno', 'acomp', 'noa,acomp', 'txtCno,txtAcomp', 'acomp_b.aspx']
+				,['txtDriverno', 'lblDriverno', 'driver', 'noa,namea', 'txtDriverno,txtDriver', 'driver_b.aspx']
 				,['txtCustno', 'lblCustno', 'cust', 'noa,comp', 'txtCustno,txtComp', 'cust_b.aspx']);
 				
 			$(document).ready(function() {
@@ -52,6 +53,8 @@
 				t_custno = $.trim($('#txtCustno').val());
 				t_comp = $.trim($('#txtComp').val());
 				t_No2 = $('#cmbNo2').val();
+				t_driverno = $.trim($('#txtDriverno').val());
+				t_driver =  $.trim($('#txtDriver').val());
 				
 				
 				var t_where = " 1=1 "
@@ -59,12 +62,16 @@
 					+q_sqlPara2("noa", t_noa)
 					+q_sqlPara2("custno", t_custno)
 					+q_sqlPara2("cno",t_cno)
-					+q_sqlPara2("no2",t_No2);
+					+q_sqlPara2("no2",t_No2)
+					+q_sqlPara2("lng",t_driverno);
+					
 					
 				if(t_comp.length>0)	
 					t_where += " and charindex('"+t_comp+"',comp)>0";
 				if(t_acomp.length>0)	
 					t_where += " and charindex('"+t_acomp+"',acomp)>0";
+				if(t_driver.length>0)   
+                    t_where += " and charindex('"+t_driver+"',lat)>0";
 					
 				t_where = ' where=^^' + t_where + '^^ ';
 				return t_where;
@@ -113,6 +120,14 @@
                 <tr class='seek_tr'>
                     <td class='seek'  style="width:20%;"><a id='lblTypea'>地區</a></td>
                     <td><select id="cmbNo2" class="txt c1" style="font-size:medium;"> </select></td>
+                </tr>
+                <tr class='seek_tr'>
+                    <td class='seek'  style="width:20%;"><a id='lblDriverno'>司機編號</a></td>
+                    <td><input class="txt" id="txtDriverno" type="text" style="width:215px; font-size:medium;" /></td>
+                </tr>
+                <tr class='seek_tr'>
+                    <td class='seek'  style="width:20%;"><a id='lblDriver'>司機姓名</a></td>
+                    <td><input class="txt" id="txtDriver" type="text" style="width:215px; font-size:medium;" /></td>
                 </tr>
 			</table>
 			<!--#include file="../inc/seek_ctrl.inc"-->
